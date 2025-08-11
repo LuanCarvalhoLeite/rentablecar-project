@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>3424e89f-d24b-40e3-a8f6-6d4644b8ed91</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RAC.Application\RAC.Application.csproj" />
+    <ProjectReference Include="..\RAC.Communication\RAC.Communication.csproj" />
+    <ProjectReference Include="..\RAC.Exception\RAC.Exception.csproj" />
+    <ProjectReference Include="..\RAC.Infrastructure\RAC.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
