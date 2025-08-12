@@ -5,6 +5,7 @@ using RAC.Communication.Responses;
 using RAC.Domain.Repositories;
 using RAC.Domain.Repositories.User;
 using RAC.Domain.Security.Cryptography;
+using RAC.Domain.Security.Token;
 using RAC.Exception.ExceptionBase;
 
 namespace RAC.Application.UseCases.Users.Register;
@@ -15,16 +16,19 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     private readonly IPasswordEncripter _passwordEncripter;
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IAccessTokenGenerator _accessTokenGenerator;
 
     public RegisterUserUseCase(IMapper mapper,
-        IPasswordEncripter passwordEncripter, 
-        IUserRepository userRepository, 
-        IUnitOfWork unitOfWork)
+        IPasswordEncripter passwordEncripter,
+        IUserRepository userRepository,
+        IUnitOfWork unitOfWork,
+        IAccessTokenGenerator accessTokenGenerator)
     {
         _mapper = mapper;
         _passwordEncripter = passwordEncripter;
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
+        _accessTokenGenerator = accessTokenGenerator;
     }
 
     public async Task<ResponseUser> Execute(RequestUser request)
@@ -41,7 +45,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         return new ResponseUser
         {
             Name = user.Name,
-
+            Token = _accessTokenGenerator.Generate(user),
         };
     }
 
