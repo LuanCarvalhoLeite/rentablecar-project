@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using RAC.API.Configuration;
 using RAC.API.Filter;
 using RAC.Application;
 using RAC.Infrastructure;
@@ -12,6 +14,7 @@ builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)))
 
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+builder.Services.AddJwtConfiguration(builder.Configuration);
 
 var app = builder.Build();
 
@@ -23,6 +26,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
