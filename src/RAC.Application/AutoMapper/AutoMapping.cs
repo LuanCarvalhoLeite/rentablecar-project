@@ -17,6 +17,7 @@ public class AutoMapping : Profile
     public void RequestToEntity()
     {
         CreateMap<RequestCar, Car>();
+        CreateMap<RequestUser, User>();
     }
 
     public void EntityToResponse()

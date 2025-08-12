@@ -18,7 +18,7 @@ public class CarController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(ResponseCarRegistered), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseError), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Registrar(
+    public async Task<IActionResult> Register(
         [FromServices] IRegisterCarUseCase useCase,
         [FromBody] RequestCar request)
     {
