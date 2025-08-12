@@ -1,7 +1,8 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
+using FluentValidation.Results;
 using RAC.Communication.Requests;
 using RAC.Communication.Responses;
+using RAC.Domain.Repositories.User;
 using RAC.Domain.Security.Cryptography;
 using RAC.Exception.ExceptionBase;
 
@@ -11,16 +12,18 @@ public class RegisterUserUseCase : IRegisterUserUseCase
 {
     private readonly IMapper _mapper;
     private readonly IPasswordEncripter _passwordEncripter;
+    private readonly IUserRepository _userRepository;
 
-    public RegisterUserUseCase(IMapper mapper, IPasswordEncripter passwordEncripter)
+    public RegisterUserUseCase(IMapper mapper, IPasswordEncripter passwordEncripter, IUserRepository userRepository)
     {
         _mapper = mapper;
         _passwordEncripter = passwordEncripter;
+        _userRepository = userRepository;
     }
 
     public async Task<ResponseUser> Execute(RequestUser request)
     {
-        Validate(request);
+        await Validate(request);
 
         var user = _mapper.Map<Domain.Entities.User>(request);
         user.Password = _passwordEncripter.Encrypt(request.Password);
@@ -32,9 +35,16 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         };
     }
 
-    private void Validate(RequestUser request)
+    private async Task Validate(RequestUser request)
     {
         var result = new UserValidator().Validate(request);
+
+        var emailExist = await _userRepository.ExistActiveUserEmail(request.Email);
+
+        if (emailExist)
+        {
+            result.Errors.Add(new ValidationFailure(string.Empty, "Email already exists"));
+        }
 
         if (result.IsValid == false)
         {

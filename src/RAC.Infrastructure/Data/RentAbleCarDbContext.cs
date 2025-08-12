@@ -9,5 +9,6 @@ public class RentAbleCarDbContext : DbContext
     public RentAbleCarDbContext(DbContextOptions<RentAbleCarDbContext> options) : base(options) {}
 
     public DbSet<Car> Cars { get; set; }
+    public DbSet<User> Users { get; set; }
 
 }

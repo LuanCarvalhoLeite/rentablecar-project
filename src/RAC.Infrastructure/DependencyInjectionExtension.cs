@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RAC.Domain.Repositories;
 using RAC.Domain.Repositories.Car;
+using RAC.Domain.Repositories.User;
 using RAC.Domain.Security.Cryptography;
 using RAC.Infrastructure.Data;
 using RAC.Infrastructure.Data.Repositories;
@@ -19,6 +20,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<ICarRepository, CarRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         services.AddScoped<IPasswordEncripter, Security.BCrypt>();
     }
