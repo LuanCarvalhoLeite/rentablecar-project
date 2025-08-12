@@ -12,7 +12,7 @@ using RAC.Infrastructure.Data;
 namespace RAC.Infrastructure.Migrations
 {
     [DbContext(typeof(RentAbleCarDbContext))]
-    [Migration("20250811205321_InitialMigration")]
+    [Migration("20250812140936_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -92,18 +92,18 @@ namespace RAC.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("RAC.Domain.Entities.Car", b =>
                 {
-                    b.HasOne("RAC.Domain.Entities.User", "User")
+                    b.HasOne("RAC.Domain.Entities.User", "Users")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

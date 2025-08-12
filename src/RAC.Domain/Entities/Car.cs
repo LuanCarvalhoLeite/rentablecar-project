@@ -13,5 +13,5 @@ public class Car
     public DateTime DataCriacao { get; set; } = DateTime.UtcNow;
 
     public long UserId { get; set; }
-    public User User { get; set; } = default!;
+    public User Users { get; set; } = default!;
 }

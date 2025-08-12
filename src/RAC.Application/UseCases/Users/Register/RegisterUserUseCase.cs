@@ -2,6 +2,7 @@
 using FluentValidation.Results;
 using RAC.Communication.Requests;
 using RAC.Communication.Responses;
+using RAC.Domain.Repositories;
 using RAC.Domain.Repositories.User;
 using RAC.Domain.Security.Cryptography;
 using RAC.Exception.ExceptionBase;
@@ -13,12 +14,17 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     private readonly IMapper _mapper;
     private readonly IPasswordEncripter _passwordEncripter;
     private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public RegisterUserUseCase(IMapper mapper, IPasswordEncripter passwordEncripter, IUserRepository userRepository)
+    public RegisterUserUseCase(IMapper mapper,
+        IPasswordEncripter passwordEncripter, 
+        IUserRepository userRepository, 
+        IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _passwordEncripter = passwordEncripter;
         _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ResponseUser> Execute(RequestUser request)
@@ -27,6 +33,10 @@ public class RegisterUserUseCase : IRegisterUserUseCase
 
         var user = _mapper.Map<Domain.Entities.User>(request);
         user.Password = _passwordEncripter.Encrypt(request.Password);
+        user.UserIdentifier = Guid.NewGuid();
+
+        await _userRepository.AddUser(user);
+        await _unitOfWork.Commit();
 
         return new ResponseUser
         {

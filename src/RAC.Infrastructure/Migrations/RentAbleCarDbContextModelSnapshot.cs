@@ -89,18 +89,18 @@ namespace RAC.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("RAC.Domain.Entities.Car", b =>
                 {
-                    b.HasOne("RAC.Domain.Entities.User", "User")
+                    b.HasOne("RAC.Domain.Entities.User", "Users")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

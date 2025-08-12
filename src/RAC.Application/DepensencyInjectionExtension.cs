@@ -5,6 +5,7 @@ using RAC.Application.UseCases.Cars.GetById;
 using RAC.Application.UseCases.Cars.Register;
 using RAC.Application.UseCases.Cars.Remove;
 using RAC.Application.UseCases.Cars.Update;
+using RAC.Application.UseCases.Users.Register;
 
 namespace RAC.Application;
 
@@ -21,5 +22,7 @@ public static class DepensencyInjectionExtension
         services.AddScoped<IGetCarByIdUseCase, GetCarByIdUseCase>();
         services.AddScoped<IRemoveCarUseCase, RemoveCarUseCase>();
         services.AddScoped<IUpdateCarUseCase, UpdateCarUseCase>();
+
+        services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
     }
 }
