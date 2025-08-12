@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RAC.Application.UseCases.Cars.GetAll;
 using RAC.Application.UseCases.Cars.GetById;
 using RAC.Application.UseCases.Cars.Register;
@@ -6,12 +7,12 @@ using RAC.Application.UseCases.Cars.Remove;
 using RAC.Application.UseCases.Cars.Update;
 using RAC.Communication.Requests;
 using RAC.Communication.Responses;
-using RAC.Exception.ExceptionBase;
 
 namespace RAC.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class CarController : ControllerBase
 {
 
