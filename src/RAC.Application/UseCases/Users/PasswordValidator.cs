@@ -22,6 +22,7 @@ public partial class PasswordValidator<T> : PropertyValidator<T, string>
                 "one upper letter, one lower letter, one number and a special character (for exemple,!,@,*,#,%).");
             return false;
         }
+
         if (password.Length < 8)
         {
             context.MessageFormatter.AppendArgument(ERROR_MESSAGE, "Your password must contain at least 8 characters " +

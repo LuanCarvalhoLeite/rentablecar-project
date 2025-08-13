@@ -2,7 +2,7 @@
 using FluentAssertions;
 using RAC.Application.UseCases.Cars;
 
-namespace Valitador.Tests.Expenses.Register;
+namespace Valitador.Tests.Cars.Register;
 
 public class RegisterCarValidatorTests
 {

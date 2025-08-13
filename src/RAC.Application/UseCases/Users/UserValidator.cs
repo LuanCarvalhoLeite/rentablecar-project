@@ -11,7 +11,9 @@ public class UserValidator : AbstractValidator<RequestUser>
         RuleFor(user => user.Name).NotEmpty().WithMessage("Name is required");
         RuleFor(user => user.Email)
             .NotEmpty().WithMessage("Email is required")
-            .EmailAddress().WithMessage("Invalid email format");
+            .EmailAddress()
+            .When(user => string.IsNullOrWhiteSpace(user.Email) == false, ApplyConditionTo.CurrentValidator)
+            .WithMessage("Invalid email format");
 
         RuleFor(user => user.Password).SetValidator(new PasswordValidator<RequestUser>());
     }
